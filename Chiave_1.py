@@ -1,23 +1,22 @@
 #Alberto Gibellato 5BI
-#Messaggio e chiave dall'utente, chiave criptata e inserita in un file assieme al messaggio
 
 import hashlib
 import sys
 
-messaggio = input("Scrivere un messaggio: ")
+messagge = input("Write a message: ")
 
 while True:
-    chiave_input = input("Scrivere la chiave: ")
+    chiave_input = input("Write the key: ")
     if len(chiave_input) < 10:
         break
-    print("Errore: la chiave deve essere meno di 10 caratteri.", file=sys.stderr)
+    print("Error: the key must be less than 10 characters.", file=sys.stderr)
 
 hash_hex = hashlib.sha256(chiave_input.encode('utf-8')).hexdigest()
 
-#print("Chiave:", chiave_input)
+#print("Key:", chiave_input)
 #print("SHA256:", hash_hex)
 
-file_chiave = open("chiave.txt", "w")
+file_chiave = open("key.txt", "w")
 file_chiave.write(hash_hex + "\n")
-file_chiave.write(messaggio)
+file_chiave.write(messagge)
 file_chiave.close()
