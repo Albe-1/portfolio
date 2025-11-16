@@ -17,16 +17,16 @@ class Dog:
 
 dog_lists = []
 
-r = requests.get(f"https://dog.ceo/api/breeds/list/all")        #faccio una richiesta all'url     
+r = requests.get(f"https://dog.ceo/api/breeds/list/all")   
 
-if r.status_code == 200:        #controllo se e' giusto
-    data = r.json()             #converto in dizionario la risposta della riga 3
-    dizionario_razze = data["message"]          #estraggo dal dizionario che ho riportato solo message
-    lista_razze = list(dizionario_razze.keys())         #creo una lista con solo le chiavi del dizionario
+if r.status_code == 200:
+    data = r.json()
+    dizionario_razze = data["message"]
+    lista_razze = list(dizionario_razze.keys())
 
     for i in range(0,10,1):
-        razza = lista_razze[i]  # uso i perche' gli indici partono da 0
-        sottorazze = dizionario_razze[razza]  # ottengo eventuali sottorazze
+        razza = lista_razze[i]
+        sottorazze = dizionario_razze[razza]
         print(f"{i+1}. {razza}: {sottorazze}")
 
         image_requests = requests.get(f"https://dog.ceo/api/breed/{razza}/images/random")
@@ -55,7 +55,7 @@ dogs_data = {
     "dogs": [d.to_dict() for d in dog_lists]
 }
 
-with open("dogs_data.json", "w") as file:           #per aprire il file in modalita' scrittura
+with open("dogs_data.json", "w") as file:
     json.dump(dogs_data, file, indent=4)
 
 for d in dog_lists:
@@ -81,4 +81,5 @@ for dog in dog_lists:
     ET.SubElement(dog_elem, "image_url").text = dog.image_url if dog.image_url else ""
 
 tree = ET.ElementTree(root)
+
 tree.write("dogs_data.xml", encoding="utf-8", xml_declaration=True)
